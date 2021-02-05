@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using take_test.API.Domain.Services;
+using take_test.API.Services;
 
 namespace take_test.API
 {
@@ -23,7 +25,7 @@ namespace take_test.API
 
             services.AddControllers();
 
-
+            services.AddScoped<IGitHubAccessService, GitHubAccessService>();
             services.AddAutoMapper(typeof(Startup));
         }
 
