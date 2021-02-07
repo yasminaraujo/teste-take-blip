@@ -2,9 +2,9 @@ using System;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
-namespace take_test.Domain.Model
+namespace take_test.API.Domain.Model
 {
-    public class RepositoryModel
+    public class Repository
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
