@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,12 +11,43 @@ using take_test.API.Domain.Services;
 using take_test.API.Domain.Model;
 
 namespace take_test.API.Services
-{
+{   
+
+        
     public class GitHubAccessService : IGitHubAccessService
     {
         private static readonly HttpClient client = new HttpClient();
+
         public GitHubAccessService(){}
-        public async Task<List<Repository>> getGitHubRepositoriesData()
+        public async Task<Carousel> GetCarouselAsync()
+        {
+            var repositories = await getGitHubRepositoriesData();
+            
+            var carousel = new Carousel();
+
+            carousel.itemType = "application/vnd.lime.document-select+json";
+            var carouselItems = new List<Item>();
+            
+            foreach (var repository in repositories)
+            {   
+                var item = new Item();
+                item.header = new Header();
+                item.header.value = new HeaderValue();
+                
+                item.header.type = "application/vnd.lime.media-link+json";
+                item.header.value.title = repository.Name;
+                item.header.value.text = repository.Description;
+                item.header.value.type = "image/jpeg";
+                item.header.value.uri = "https://avatars.githubusercontent.com/u/4369522?s=200&v=4";
+
+                carouselItems.Add(item);
+            }
+            carousel.items = carouselItems;
+         
+            
+            return carousel;
+        }
+        private async Task<List<Repository>> getGitHubRepositoriesData()
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(

@@ -6,6 +6,6 @@ namespace take_test.API.Domain.Services
 {
     public interface IGitHubAccessService
     {
-        Task<List<Repository>> getGitHubRepositoriesData();
+        Task<Carousel> GetCarouselAsync();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using take_test.API.Services;
 using take_test.API.Domain.Model;
 using take_test.API.Domain.Services;
+using Newtonsoft.Json;
 
 namespace take_test.Controllers
 {
@@ -20,11 +22,10 @@ namespace take_test.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<Repository>), 200)]
-        public async Task<List<Repository>> GetRepositories()
-        {
-            var repositories = await _gitHubAccessService.getGitHubRepositoriesData();
-            return repositories;
+        [Route("/carousel")]
+        public async Task<Carousel> getCarouselData(){
+            var carouselData = await _gitHubAccessService.GetCarouselAsync();
+            return carouselData;
         }
     }
 }
